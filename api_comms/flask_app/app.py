@@ -241,12 +241,6 @@ def view_generated_report(report_name: str, report_id: int):
 def zoom_link_company():
     # Username: secAnalyst45@outlook.com, Password: sec1nqly$T
     # login with zoom links
-    # data = {'email': 'secAnalyst45@outlook.com',
-    #         'password': 'sec1nqly$T'}
-    # response = requests.get('https://zoom.us/signin', data=data, timeout=15)
-    # if response.status_code != 200:
-    #     return render_template('zoom_link.html')
-
     url_zoom = 'https://us05web.zoom.us/j/2112897265?pwd=SGxCZkd3OVYyNjhSaU9QZzVaWVVqdz09'
     return render_template('zoom_link.html', url_zoom=url_zoom)
 
