@@ -3,7 +3,7 @@ import json
 import requests
 from ast import literal_eval
 from flask import Flask, session, redirect, url_for, request, render_template
-# from django_api.report_schema import object_conversions
+import object_conversions
 
 """
 A file that defines the routes for the frontend Flask application.
@@ -171,7 +171,7 @@ def generated_report():
             reports = response_generated.json()
     print(reports)
     # pass all of the reports into the dataframes_dict_to_workbook() function
-    # object_conversions.dataframes_dict_to_workbook(reports, 'api_comms/generated_reports')
+    object_conversions.dataframes_dict_to_workbook(reports, 'api_comms/generated_reports')
     return render_template('generated_report.html', title='Generated Report',
                            generated_reports=reports, username=username)
 

@@ -70,7 +70,7 @@ class EdgarScraper:
                         filing_type: str = "10-K",
                         prior_to: str = "",
                         ownership: str = "include",
-                        no_of_entries: int = 100) -> str:
+                        no_of_entries: int = 10) -> str:
         """
         A function that gets the url link to a company's overall filing page.
 
@@ -80,8 +80,8 @@ class EdgarScraper:
             prior_to: Time prior which documents are to be retrieved. If not
             specified will return all documents.
             ownership: Defaults to include. Options are include, exclude, only.
-            no_of_entries: Number of reports can be returned. Defaults to 100
-            and the maximum is 100 as well.
+            no_of_entries: Number of reports can be returned. Defaults to 10
+            and the maximum is 10 as well.
 
         Returns:
             Returns the url of filing page which contains information for 10-K
@@ -96,7 +96,7 @@ class EdgarScraper:
                         filing_type: str = "",
                         prior_to: str = "",
                         ownership: str = "include",
-                        no_of_entries: int = 100) -> lxml.html.HtmlElement:
+                        no_of_entries: int = 10) -> lxml.html.HtmlElement:
         """
         A function that get the htmlElement from the GET result of the filing
         page of a company.
@@ -107,8 +107,8 @@ class EdgarScraper:
             prior_to: Time prior which documents are to be retrieved. If not
             specified will return all documents.
             ownership: Defaults to include. Options are include, exclude, only.
-            no_of_entries: Number of reports can be returned. Defaults to 100
-            and the maximum is 100 as well.
+            no_of_entries: Number of reports can be returned. Defaults to 10
+            and the maximum is 10 as well.
 
         Returns:
             Returns the HTML of the filing page. If the GET request to the
@@ -155,7 +155,7 @@ class EdgarScraper:
                                        filing_type: str = "10-K",
                                        prior_to: str = "",
                                        ownership: str = "include",
-                                       no_of_entries: int = 100) -> dict:
+                                       no_of_entries: int = 10) -> dict:
         """
         A function that retrieve the either 10-Q or 10-K excel reports from
         the company's filing page.
@@ -169,8 +169,8 @@ class EdgarScraper:
 
             ownership: Defaults to include. Options are include, exclude, only.
 
-            no_of_entries: Number of reports can be returned. Defaults to 100
-                and the maximum is 100 as well.
+            no_of_entries: Number of reports can be returned. Defaults to 10
+                and the maximum is 10 as well.
 
         Returns:
             A dictionary of urls for the company's 10-K or 10-Q excel reports.
@@ -236,7 +236,7 @@ class EdgarScraper:
     def download_10k_reports(self,
                              prior_to: str = "",
                              ownership: str = "include",
-                             no_of_entries: int = 100) -> dict:
+                             no_of_entries: int = 10) -> dict:
         """
         Downloads the 10-K excel reports of the current company.
 
@@ -246,8 +246,8 @@ class EdgarScraper:
 
             ownership: Defaults to include. Options are include, exclude, only.
 
-            no_of_entries: Number of reports can be returned. Defaults to 100
-                and the maximum is 100 as well.
+            no_of_entries: Number of reports can be returned. Defaults to 10
+                and the maximum is 10 as well.
 
         Returns:
             A dictionary where key is a year and the value is the file path for
