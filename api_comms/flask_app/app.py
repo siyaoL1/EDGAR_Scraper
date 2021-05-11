@@ -1,5 +1,7 @@
 import os
 import json
+import webbrowser
+
 import requests
 from flask import Flask, session, redirect, url_for, request, render_template
 
@@ -134,9 +136,11 @@ def raw_report():
                     break
         # if a url is returned, the variable 'excel_url' should not be 'Not Found'
         # therefore, redirect
-        # excel_url = 'https://www.sec.gov/Archives/edgar/data/1652044/000165204421000010/Financial_Report.xlsx'
         if excel_url != 'Not Found':
-            return redirect(excel_url, code=302)
+            # take first 9 chars off, last 2
+            excel_url = excel_url[8:]
+            excel_url = excel_url[:-2]
+            webbrowser.open_new(excel_url)
         return render_template('raw_report.html', title='Raw Report',
                                username=session.get('username'),
                                excel_url=excel_url)
