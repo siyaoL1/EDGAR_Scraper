@@ -18,9 +18,11 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install --upgrade -r requirements.txt
 
-RUN if ["$TESTING" = "True"]; \
-    then pip install coverage; \
-    fi
-
 # Mounts the application code to the image
 COPY . /code/
+
+ARG TESTING
+
+RUN if [ "$TESTING" = "True" ]; \
+    then pip install -r testing-requirements.txt; \
+    fi

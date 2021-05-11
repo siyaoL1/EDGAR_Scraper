@@ -3,9 +3,9 @@ version: '3.9'
 services:
     postgres-test-db:
         image: postgres:latest
-        container_name: postgres-db
+        container_name: postgres-test-db
         volumes:
-          - pgdata:/var/lib/postgresql/data
+          - pgtestdata:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
@@ -50,10 +50,8 @@ services:
             - ./api_comms:/code
         environment:
             - UI_PORT=5000
-            - API_PORT=8000
             - DJANGO_URL=django-test-server
             - DEBUG=False
-            - TESTING=True
         ports:
             - "5000:5000"
         depends_on:
@@ -65,7 +63,7 @@ services:
             test: "exit 0"
 
 volumes:
-    pgdata:
+    pgtestdata:
 
 networks:
     test:
