@@ -215,9 +215,9 @@ def view_generated_report(report_id: int):
     """
     if session.get('username'):
         response = requests.get(
-                f'http://18.217.8.244:8000/api/generated-reports/{report_id}',
-                auth=(session.get('username'), session.get('password')),
-                timeout=15
+            f'http://18.217.8.244:8000/api/generated-reports/{report_id}',
+            auth=(session.get('username'), session.get('password')),
+            timeout=15
         )
 
         if response.status_code == 200:
@@ -367,7 +367,7 @@ def analysis(report_id: str):
             return render_template('forbidden.html', title='Forbidden'), 403
 
         return render_template('server_error.html', title='Server Error'), \
-               response.status_code
+            response.status_code
 
     # user not logged in
     return render_template('login.html', title='Login',

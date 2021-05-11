@@ -1,5 +1,3 @@
-import json
-
 from django.db import models
 from django.conf import settings
 from django.apps import AppConfig
@@ -10,8 +8,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.request import Request
 import json
-
 from report_schema.generated_report.permissions import IsOwner
+
 
 class GeneratedReport(models.Model):
     """Defines the GeneratedReport model in our database

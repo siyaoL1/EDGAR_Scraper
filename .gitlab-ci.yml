@@ -48,7 +48,7 @@ test-flask-ui:
 flake8:
   stage: Static Analysis
   script:
-    - flake8 --ignore=W293,W391 --exclude 'venv/*' 'django_api/tests' --max-line-length=120 .
+    - flake8 --ignore=W293,W391,F401,F541 --exclude 'venv/*' 'django_api/tests' --max-line-length=120 .
   retry:
     max: 2
     when:
