@@ -31,7 +31,7 @@ class AppTests(unittest.TestCase):
             'password': "12345678",
             'email': '123456@gmail.com'
         }
-        response = self.app.post('/register', follow_redirects=True, data=data)
+        response = self.app.get('/register', follow_redirects=True, data=data)
         self.assertEqual(response.status_code, 200)
 
     def test_login_page_get(self):
@@ -43,7 +43,7 @@ class AppTests(unittest.TestCase):
             'username': 'admin',
             'password': "admin",
         }
-        response = self.app.post('/login', data=data, follow_redirects=True)
+        response = self.app.get('/login', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
     def test_logout_page(self):
@@ -63,7 +63,7 @@ class AppTests(unittest.TestCase):
             'username': 'admin'
         }
 
-        response = self.app.post('/raw_report', data=data,
+        response = self.app.get('/raw_report', data=data,
                                  follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 

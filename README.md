@@ -68,6 +68,12 @@ Should be how to run the tests from a docker container
 * ```/generated_report```
 
   The generated report route which displays the generated reports for the logged-in user.  
+* ```/zoom_link```
+
+  The zoom link route which takes a user to a page where they may decide to login to their own zoom account to host a meeting
+  or use the public multi-user link
+  
+
 
 * ```/report_generation```
 
@@ -101,4 +107,5 @@ describe what the various endpoints do
 
 ### Sprint 3
 - Brady Snelson - 15% - Refactored/transferred the functionality that existed within the report runner file (the core of report generation) into endpoints on the django backed. Rewrote tests for all of said functionality. Engineered a new solution to creating a report through a from instead of prompting for user input. Added an authentication endpoint to the user model.
+- Gilbert Garczynski - 15% - Added download report button for raw reports.  Added zoom link for the company and to login to your personal zoom.  Fixes to website tests and other design fixes to various other files.
 - Siyao Li - 15% - Created frontend report generation page with dynamic multiselect forms. Integreated frontend report generation page with Django server. Integrated login page with django authentication endpoint, and fixed bug on registration page. Added tests for the report generation. Worked on styling the frontend UI. 
