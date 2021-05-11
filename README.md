@@ -19,8 +19,6 @@ The following commands will create an index.html file in docs/build/html/index.h
 ```
 
 # Developer Documentation
-### Setting up the Docker Containers
-Patrick please put all the steps you'd take to set up the docker containers from scratch
 
 ### Accessing Cloud Instance
 * Download the scraper.pem security key
@@ -31,11 +29,35 @@ Patrick please put all the steps you'd take to set up the docker containers from
     ssh -i "scraper.pem" ec2-user@ec2-18-217-8-244.us-east-2.compute.amazonaws.com
     ```
 
+### Starting the Docker Containers
+```bash
+docker-compose up --build -d
+```
+
+### Setup database
+```bash
+docker exec django-server python3 manage.py makemigrations
+docker exec django-server python3 manage.py migrate
+```
+
+### Setup superuser
+```bash
+docker exec -it django-server python3 manage.py createsuperuser
+```
+
 ### Running Tests
-#### Backend Tests
-Should be how to run the tests from a docker container
-#### Frontend Tests
-Should be how to run the tests from a docker container
+#### Backend Tests from bash
+
+```bash
+docker exec -it django-server bash
+python3 manage.py test
+```
+
+#### Frontend Tests from bash
+```bash
+docker exec -it flask-server bash
+python3 flask_app/test_flask_app.py
+```
 
 ### System Architecture
 #### Flask Frontend Routes
