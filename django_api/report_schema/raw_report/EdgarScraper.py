@@ -81,7 +81,7 @@ class EdgarScraper:
             specified will return all documents.
             ownership: Defaults to include. Options are include, exclude, only.
             no_of_entries: Number of reports can be returned. Defaults to 10
-            and the maximum is 10 as well.
+            and the maximum is 100 as well.
 
         Returns:
             Returns the url of filing page which contains information for 10-K
@@ -108,7 +108,7 @@ class EdgarScraper:
             specified will return all documents.
             ownership: Defaults to include. Options are include, exclude, only.
             no_of_entries: Number of reports can be returned. Defaults to 10
-            and the maximum is 10 as well.
+            and the maximum is 100 as well.
 
         Returns:
             Returns the HTML of the filing page. If the GET request to the
@@ -170,7 +170,7 @@ class EdgarScraper:
             ownership: Defaults to include. Options are include, exclude, only.
 
             no_of_entries: Number of reports can be returned. Defaults to 10
-                and the maximum is 10 as well.
+                and the maximum is 100 as well.
 
         Returns:
             A dictionary of urls for the company's 10-K or 10-Q excel reports.
@@ -247,7 +247,7 @@ class EdgarScraper:
             ownership: Defaults to include. Options are include, exclude, only.
 
             no_of_entries: Number of reports can be returned. Defaults to 10
-                and the maximum is 10 as well.
+                and the maximum is 100 as well.
 
         Returns:
             A dictionary where key is a year and the value is the file path for
