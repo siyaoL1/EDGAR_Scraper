@@ -29,9 +29,6 @@ build-start:
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
     - pip install -r requirements.txt
-    - pip install docker docker-compose
-    - docker-compose -f testing-compose.yaml build --build-arg TESTING="True"
-    - docker-compose -f testing-compose.yaml up -d
   retry:
     max: 2
     when:
@@ -41,7 +38,9 @@ build-start:
 test-django-backend:
   stage: test
   script:
-    - docker exec django-test-server python manage.py test
+    - cd django_api
+    - python manage.py migrate
+    - python manage.py test
   retry:
     max: 2
     when:
