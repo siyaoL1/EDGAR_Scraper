@@ -35,18 +35,6 @@ build-start:
       - runner_system_failure
       - stuck_or_timeout_failure
 
-test-django-backend:
-  stage: test
-  script:
-    - cd django_api
-    - python manage.py migrate
-    - python manage.py test
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
-
 test-flask-ui:
   stage: test
   script:
