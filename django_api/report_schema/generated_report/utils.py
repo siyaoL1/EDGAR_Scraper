@@ -185,12 +185,6 @@ def validate_analysis_request(request: Request) -> Tuple[bool, str]:
     if len(request.data) == 0:
         return False, "Empty Request"
 
-    if 'json_schema' not in request.data:
-        return False, "Report JSON missing"
-
-    if len(request.data['json_schema']) == 0:
-        return False, "Report JSON empty"
-
     if 'report_id' not in request.data or request.data["report_id"] is None:
         return False, "Report ID Missing"
 
