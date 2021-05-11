@@ -29,7 +29,7 @@ The following commands will create an index.html file in docs/build/html/index.h
     ssh -i "scraper.pem" ec2-user@ec2-18-217-8-244.us-east-2.compute.amazonaws.com
     ```
 
-### Starting the Docker Containers
+### Starting the Production Containers
 ```bash
 docker-compose up --build -d
 ```
@@ -46,17 +46,36 @@ docker exec -it django-server python3 manage.py createsuperuser
 ```
 
 ### Running Tests
-#### Backend Tests from bash
 
+#### Starting Test Containers
 ```bash
-docker exec -it django-server bash
-python3 manage.py test
+docker-compose -f testing-compose.yaml build --build-arg TESTING="True"
+docker-compose -f testing-compose.yaml up -d
 ```
 
-#### Frontend Tests from bash
+#### Backend Tests
 ```bash
-docker exec -it flask-server bash
-python3 flask_app/test_flask_app.py
+docker exec django-test-server python manage.py test
+```
+
+#### Backend Tests with coverage
+
+```bash
+docker exec django-test-server coverage run --omit venv/*,*/migrations*,*test* --source company_schema,report_schema manage.py test
+
+docker exec django-test-server coverage report
+```
+
+#### Frontend Tests
+```bash
+docker exec flask-test-server pytest flask_app/test_flask_app
+```
+
+#### Frontend Tests with coverage
+```bash
+docker exec flask-test-server coverage run --omit venv/*,*test* -m pytest flask_app/test_flask_app.py
+
+docker exec flask-test-server coverage report
 ```
 
 ### System Architecture
