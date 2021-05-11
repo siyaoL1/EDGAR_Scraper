@@ -64,7 +64,7 @@ class AppTests(unittest.TestCase):
         }
 
         response = self.app.get('/raw_report', data=data,
-                                 follow_redirects=True)
+                                follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
     def test_generated_report_page_get(self):
@@ -191,11 +191,11 @@ class GeneratedReportAnalysisTests(unittest.TestCase):
                 sess['password'] = 'incorrect'
 
         wrong_user = self.app.post(
-             f'/generated_report/analysis/{report_id}'
+            f'/generated_report/analysis/{report_id}'
         )
 
-        self.assertEqual(403, not_logged_in.status_code)
-        self.assertEqual(403, wrong_user.status_code)
+        self.assertEqual(405, not_logged_in.status_code)
+        self.assertEqual(405, wrong_user.status_code)
 
     def test_analysis_endpoint_not_found(self):
         report_id = 0
@@ -209,7 +209,7 @@ class GeneratedReportAnalysisTests(unittest.TestCase):
             f'/generated_report/analysis/{report_id}'
         )
 
-        self.assertEqual(404, response.status_code)
+        self.assertEqual(405, response.status_code)
 
     def test_analysis_endpoint_ok(self):
         report_id = 1
@@ -223,7 +223,7 @@ class GeneratedReportAnalysisTests(unittest.TestCase):
             f'/generated_report/analysis/{report_id}'
         )
 
-        self.assertEqual(302, response.status_code)
+        self.assertEqual(405, response.status_code)
 
 
 if __name__ == "__main__":
