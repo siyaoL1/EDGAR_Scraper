@@ -1,13 +1,18 @@
 # User Documentation
 ### Usage 
 * Visit http://18.217.8.244:5000/ to access the frontend UI.
-* There are five tabs at the top of the page:
+* There are six tabs at the top of the page:
   
-  ```Home```, ```Raw Reports```, ```Generated Reports```, ```Login```, ```Register```
+  ```Home```, ```Raw Reports```, ```Generated Reports```, ```Report Generation```, ```Login```, ```Register```
 * To create an account, go to ```Register``` tab to register an account in our system.
 * To log into your account, go to ```Login``` tab to log into your registered account.
+  * (Add the info for zoom meeting)
 * To get a raw report of a company's 10K documentation, go to ```Raw Reports```, fill in the information and submit request.
+* To create a customized generate report, go to ```Report Generation```. 
+  * First fill in the general information for the report you want to create, and click the next step button. (Note that the report name needs to be distinct for each generated report) 
+  * On the next page, pick the sheets and rows you want to include in the generated report, then submit the information.
 * To get the existing generated report in the current account, go to ```Generated Reports```.
+  * (Add the info for analysis)
 
 we need to explain all of things a user can do on the frontend.
 
@@ -104,6 +109,16 @@ docker exec flask-test-server coverage report
 * ```/generated_report```
 
   The generated report route which displays the generated reports for the logged-in user.  
+* ```/zoom_link```
+
+  The zoom link route which takes a user to a page where they may decide to login to their own zoom account to host a meeting
+  or use the public multi-user link
+  
+
+
+* ```/report_generation```
+
+  The report generation route which allows the logged-in user to create generated reports.  
 
 Note:  Timeout errors will be the result of network and internet speeds dropping.
 
@@ -133,3 +148,7 @@ describe what the various endpoints do
 
 ### Sprint 3
 - Brady Snelson - 15% - Refactored/transferred the functionality that existed within the report runner file (the core of report generation) into endpoints on the django backed. Rewrote tests for all of said functionality. Engineered a new solution to creating a report through a from instead of prompting for user input. Added an authentication endpoint to the user model.
+
+- Gilbert Garczynski - 15% - Added download report button for raw reports.  Added zoom link for the company and to login to your personal zoom.  Fixes to website tests and other design fixes to various other files.
+- Siyao Li - 15% - Created frontend report generation page with dynamic multiselect forms. Integreated frontend report generation page with Django server. Integrated login page with django authentication endpoint, and fixed bug on registration page. Added tests for the report generation. Worked on styling the frontend UI. 
+- Jason Hipkins - 15% - Fixed an issue with excel spreadsheets not saving correclty. Assisted in refactoring functionality of report runner and manually merging active report and object conversions to the backend. Added backend coding for converting reports from database json to downloadable excel files. Added more functionality to active_report.py by removing duplicated columns and information.

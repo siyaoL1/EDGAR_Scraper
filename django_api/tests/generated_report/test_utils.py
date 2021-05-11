@@ -282,7 +282,7 @@ class GenReportUtilTests(TestCase):
 
         self.assertTrue(report_id)
         self.assertEqual(
-            {'Document And Entity Information': {'Nov. 28, 2015 - 12 Months Ended': {'Entity Registrant Name': 'BASSETT FURNITURE INDUSTRIES INC'}, 'Jan. 08, 2016': {'Entity Registrant Name': None}, 'May. 30, 2015': {'Entity Registrant Name': None}}},
+            {'Document And Entity Information': {'Nov. 28, 2015 - 12 Months Ended': {'Entity Registrant Name': 'BASSETT FURNITURE INDUSTRIES INC', 'Entity Central Index Key': 10329}, 'Jan. 08, 2016': {'Entity Registrant Name': None, 'Entity Central Index Key': None}, 'May. 30, 2015': {'Entity Registrant Name': None, 'Entity Central Index Key': None}}},
             json.loads(GeneratedReport.objects.get(name='test report').json_schema)
         )
 
@@ -304,7 +304,7 @@ class GenReportUtilTests(TestCase):
 
         self.assertTrue(report_id)
         self.assertEqual(
-            {'CONSOLIDATED STATEMENTS OF INCOME': {'Dec. 31, 2016 - 12 Months Ended': {'Revenue': 27638000000.0}, 'Dec. 31, 2015 - 12 Months Ended': {'Revenue': 17928000000.0}, 'Dec. 31, 2014 - 12 Months Ended': {'Revenue': 12466000000.0}, 'Dec. 31, 2013 - 12 Months Ended': {'Revenue': 7872000000.0}}},
+            {'CONSOLIDATED STATEMENTS OF INCOME': {'Dec. 31, 2016 - 12 Months Ended': {'Revenue': 27638000000.0, 'Costs and expenses: - CATEGORY': 0.0, 'Cost of revenue': 3789000000.0}, 'Dec. 31, 2015 - 12 Months Ended': {'Revenue': 17928000000.0, 'Costs and expenses: - CATEGORY': 0.0, 'Cost of revenue': 2867000000.0}, 'Dec. 31, 2014 - 12 Months Ended': {'Revenue': 12466000000.0, 'Costs and expenses: - CATEGORY': 0.0, 'Cost of revenue': 2153000000.0}, 'Dec. 31, 2013 - 12 Months Ended': {'Revenue': 7872000000.0, 'Costs and expenses: - CATEGORY': 0.0, 'Cost of revenue': 1875000000.0}}},
             json.loads(GeneratedReport.objects.get(name='test report').json_schema)
         )
 
@@ -340,20 +340,14 @@ class TestValidateAnalysisRequest(TestCase):
         request_simple = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': 1,
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': 1
             }
         )
 
         request_id_is_int_string = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': '1',
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': '1'
             }
         )
 
@@ -364,10 +358,7 @@ class TestValidateAnalysisRequest(TestCase):
         user_is_none = MockedRequest(
             None,
             {
-                'report_id': 1,
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': 1
             }
         )
 
@@ -378,60 +369,42 @@ class TestValidateAnalysisRequest(TestCase):
         id_is_dict = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': {},
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': {}
             }
         )
 
         id_is_list = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': [],
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': []
             }
         )
 
         id_is_none = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': None,
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': None
             }
         )
 
         id_is_string_not_int = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': "string",
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': "string"
             }
         )
 
         id_is_float_string = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': "1.5",
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': "1.5"
             }
         )
 
         id_is_tuple = MockedRequest(
             User.objects.get(username='developer1'),
             {
-                'report_id': (1, 1),
-                'json_schema': json.dumps({
-                    'sheet1': ['row1', 'row2']
-                })
+                'report_id': (1, 1)
             }
         )
 
@@ -441,25 +414,6 @@ class TestValidateAnalysisRequest(TestCase):
         self.assertFalse(utils.validate_analysis_request(id_is_string_not_int)[0])
         self.assertFalse(utils.validate_analysis_request(id_is_float_string)[0])
         self.assertFalse(utils.validate_analysis_request(id_is_tuple)[0])
-
-    def test_validate_request_invalid_json_schema(self):
-        schema_is_missing = MockedRequest(
-            User.objects.get(username='developer1'),
-            {
-                'report_id': 1
-            }
-        )
-
-        schema_is_empty = MockedRequest(
-            User.objects.get(username='developer1'),
-            {
-                'report_id': 1,
-                'json_schema': {}
-            }
-        )
-
-        self.assertFalse(utils.validate_analysis_request(schema_is_empty)[0])
-        self.assertFalse(utils.validate_analysis_request(schema_is_missing)[0])
 
     def test_validate_request_invalid_request_data(self):
         data_is_empty = MockedRequest(
@@ -476,16 +430,8 @@ class TestValidateAnalysisRequest(TestCase):
             }
         )
 
-        data_is_missing_report_json_schema = MockedRequest(
-            User.objects.get(username='developer1'),
-            {
-                'report_id': '1'
-            }
-        )
-
         self.assertFalse(utils.validate_analysis_request(data_is_empty)[0])
         self.assertFalse(utils.validate_analysis_request(data_is_missing_report_id)[0])
-        self.assertFalse(utils.validate_analysis_request(data_is_missing_report_json_schema)[0])
 
 
 class TestRunAnalysisTests(TestCase):
@@ -554,3 +500,27 @@ class TestRunAnalysisTests(TestCase):
         report_data = json.loads(report.json_schema)
 
         self.assertTrue(utils.analysis_already_ran(report_data))
+
+    def test_run_analysis_is_saved(self):
+        user = User.objects.get(username='developer1')
+
+        report_id = utils.run_analysis(
+            user=User.objects.get(username='developer1'),
+            report_id=1
+        )
+
+        self.assertEqual(1, report_id)
+        report = GeneratedReport.objects.get(pk=report_id, created_by=user)
+
+        json_schema = json.loads(report.json_schema)
+
+        first_key = next(iter(json_schema))
+
+        contains_min = 'min' in json_schema[first_key]
+        contains_max = 'max' in json_schema[first_key]
+        contains_mean = 'mean' in json_schema[first_key]
+
+        self.assertTrue(contains_min)
+        self.assertTrue(contains_max)
+        self.assertTrue(contains_mean)
+

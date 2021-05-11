@@ -1,5 +1,7 @@
 import os
 import json
+import webbrowser
+
 import requests
 from flask import Flask, session, redirect, url_for, request, render_template
 
@@ -134,9 +136,11 @@ def raw_report():
                     break
         # if a url is returned, the variable 'excel_url' should not be 'Not Found'
         # therefore, redirect
-        # excel_url = 'https://www.sec.gov/Archives/edgar/data/1652044/000165204421000010/Financial_Report.xlsx'
         if excel_url != 'Not Found':
-            return redirect(excel_url, code=302)
+            # take first 9 chars off, last 2
+            excel_url = excel_url[8:]
+            excel_url = excel_url[:-2]
+            webbrowser.open_new(excel_url)
         return render_template('raw_report.html', title='Raw Report',
                                username=session.get('username'),
                                excel_url=excel_url)
@@ -164,6 +168,7 @@ def generated_report():
             auth=(session.get('username'), session.get('password')), timeout=15)
         if response_generated.status_code == 200:
             reports = response_generated.json()
+    print(reports)
     return render_template('generated_report.html', title='Generated Report',
                            generated_reports=reports, username=username)
 
@@ -241,12 +246,6 @@ def view_generated_report(report_id: int):
 def zoom_link_company():
     # Username: secAnalyst45@outlook.com, Password: sec1nqly$T
     # login with zoom links
-    # data = {'email': 'secAnalyst45@outlook.com',
-    #         'password': 'sec1nqly$T'}
-    # response = requests.get('https://zoom.us/signin', data=data, timeout=15)
-    # if response.status_code != 200:
-    #     return render_template('zoom_link.html')
-
     url_zoom = 'https://us05web.zoom.us/j/2112897265?pwd=SGxCZkd3OVYyNjhSaU9QZzVaWVVqdz09'
     return render_template('zoom_link.html', url_zoom=url_zoom)
 

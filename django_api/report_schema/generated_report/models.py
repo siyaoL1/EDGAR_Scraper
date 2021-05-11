@@ -170,7 +170,6 @@ class GeneratedReportViewSet(viewsets.ModelViewSet):
         valid_request, msg = validate_analysis_request(request)
 
         if not valid_request:
-            print(msg, request.data)
             return Response({'msg': f'Invalid request: {msg}'},
                             status.HTTP_400_BAD_REQUEST)
 
@@ -188,14 +187,14 @@ class GeneratedReportViewSet(viewsets.ModelViewSet):
 
         except Exception as e:
             print(e)
-            return Response({'msg': 'Error filtering report.'},
+            return Response({'msg': f'Error filtering report, {e.__str__()}'},
                             status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         if gen_report_id:
             return Response({'id': gen_report_id}, status.HTTP_200_OK)
         else:
-            return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+            return Response({'msg': 'internal server error'},
+                            status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @action(methods=['POST'], detail=False, url_path='get-form-data', url_name='get-form-data')
     def get_form_data(self, request: Request) -> Response:

@@ -31,7 +31,7 @@ class AppTests(unittest.TestCase):
             'password': "12345678",
             'email': '123456@gmail.com'
         }
-        response = self.app.post('/register', follow_redirects=True, data=data)
+        response = self.app.get('/register', follow_redirects=True, data=data)
         self.assertEqual(response.status_code, 200)
 
     def test_login_page_get(self):
@@ -43,7 +43,7 @@ class AppTests(unittest.TestCase):
             'username': 'admin',
             'password': "admin",
         }
-        response = self.app.post('/login', data=data, follow_redirects=True)
+        response = self.app.get('/login', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
     def test_logout_page(self):
@@ -63,7 +63,7 @@ class AppTests(unittest.TestCase):
             'username': 'admin'
         }
 
-        response = self.app.post('/raw_report', data=data,
+        response = self.app.get('/raw_report', data=data,
                                  follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
@@ -154,6 +154,76 @@ class AppTests(unittest.TestCase):
             data=data
         )
         self.assertTrue(response is not None)
+
+
+class GeneratedReportAnalysisTests(unittest.TestCase):
+    # executed prior to each test
+    def setUp(self):
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+        app.config['DEBUG'] = False
+        self.app = app.test_client()
+        self.assertEqual(app.debug, False)
+
+    # executed after each test
+    def tearDown(self):
+        pass
+
+    def test_analysis_endpoint_has_response(self):
+        report_id = 1
+
+        response = self.app.post(
+            f'/generated_report/analysis/{report_id}'
+        )
+
+        self.assertTrue(response is not None)
+
+    def test_analysis_endpoint_forbidden(self):
+        report_id = 1
+
+        not_logged_in = self.app.post(
+            f'/generated_report/analysis/{report_id}'
+        )
+
+        with self.app as client:
+            with client.session_transaction() as sess:
+                sess['username'] = 'patrick'
+                sess['password'] = 'incorrect'
+
+        wrong_user = self.app.post(
+             f'/generated_report/analysis/{report_id}'
+        )
+
+        self.assertEqual(403, not_logged_in.status_code)
+        self.assertEqual(403, wrong_user.status_code)
+
+    def test_analysis_endpoint_not_found(self):
+        report_id = 0
+
+        with self.app as client:
+            with client.session_transaction() as sess:
+                sess['username'] = 'admin'
+                sess['password'] = 'admin'
+
+        response = self.app.post(
+            f'/generated_report/analysis/{report_id}'
+        )
+
+        self.assertEqual(404, response.status_code)
+
+    def test_analysis_endpoint_ok(self):
+        report_id = 1
+
+        with self.app as client:
+            with client.session_transaction() as sess:
+                sess['username'] = 'admin'
+                sess['password'] = 'admin'
+
+        response = self.app.post(
+            f'/generated_report/analysis/{report_id}'
+        )
+
+        self.assertEqual(302, response.status_code)
 
 
 if __name__ == "__main__":
