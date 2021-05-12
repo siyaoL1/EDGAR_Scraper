@@ -132,21 +132,6 @@ class ActiveReport:
         """
         return object_conversions.dataframes_dict_to_json_dict(self.generated_report)
 
-    def min_max_avg(self):
-        """
-        :return: does min/max/avg analysis on self.generate_report object. Adds the columns to each sheet
-        """
-        skip_first = 0
-        for frame in self.generated_report:
-            if skip_first == 1:
-                analysis = self.generated_report[frame].astype(np.float64).select_dtypes(np.number)\
-                    .stack().groupby(level=0).agg(['min', 'max', 'mean'])
-            else:
-                skip_first = 1
-                analysis = self.generated_report[frame].select_dtypes(np.number)\
-                    .stack().groupby(level=0).agg(['min', 'max', 'mean'])
-            self.generated_report[frame] = pd.concat([self.generated_report[frame], analysis], axis=1)
-
     def load_generated_report(self, gen_report: dict) -> None:
         """Loads in a saved report that is currently in its json form into the active report object
 

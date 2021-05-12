@@ -252,6 +252,5 @@ class Proxy:
 
         if is_valid:
             return json.dumps({'msg': msg}), 200
-            # return self.query_engine.generate_new_report(request)
 
         return json.dumps({"error": msg}), 400

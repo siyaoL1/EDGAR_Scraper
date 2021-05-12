@@ -69,7 +69,6 @@ class GeneratedReportViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
-    # Overwrite the create method that is called for a POST request
     def create(self, request: Request, *args, **kwargs) -> Response:
         """Overwrites the default create method for the GeneratedReport viewset.
         Creates a generated report object in the database.
@@ -94,7 +93,6 @@ class GeneratedReportViewSet(viewsets.ModelViewSet):
         else:
             return Response(report_serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # Overwrite the list method that is called for a GET request
     def list(self, request: Request, *args, **kwargs) -> Response:
         """Overwrites the default list method for the GeneratedReport viewset.
         Filters and sends all generated reports for the authenticated user.
@@ -120,8 +118,7 @@ class GeneratedReportViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(filtered_queryset, many=True)
         return Response(serializer.data)
 
-    # Overwrite the update method for what a PUT request is made
-    def update(self, request, *args, **kwargs):
+    def update(self, request: Request, *args, **kwargs) -> Response:
         """Overwrites the default update method for the GeneratedReport viewset.
         Updates the specified generated report in the database.
         This function is called when a user makes a PUT request to the /api/generated_reports/ endpoint.
@@ -151,7 +148,7 @@ class GeneratedReportViewSet(viewsets.ModelViewSet):
 
     @action(methods=['POST'], detail=False, url_path='analysis',
             url_name='analysis')
-    def analysis(self, request) -> Response:
+    def analysis(self, request: Request) -> Response:
         """
         Takes a report_id in a request and then if valid, runs min_max_avg
         analysis on json_schema for a report with pk=report_id.

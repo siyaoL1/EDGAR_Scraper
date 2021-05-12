@@ -10,7 +10,7 @@ class IsOwner(permissions.BasePermission):
     Inherits from the default django permissions class.
     """
 
-    def has_object_permission(self, request: Request, view: views, obj: Model):
+    def has_object_permission(self, request: Request, view: views, obj: Model) -> bool:
         """Determines if the user specified in the request is the same user that created the object obj.
         This function overwrites the default function and is automatically called by django rest framework when
         it is trying to determine permissions for a call to a view in the viewset.

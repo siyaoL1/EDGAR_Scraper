@@ -33,17 +33,6 @@ def main_page():
     return render_template('mainpage.html', title='Main Page')
 
 
-@app.route('/docs')
-def documentation():
-    """
-    A function called when there's a GET request to index route received.
-
-    Returns:
-        Renders mainpage.html template which shows the homepage of the app.
-    """
-    return render_template('docs/html/index.html', title='Documentation')
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     """
