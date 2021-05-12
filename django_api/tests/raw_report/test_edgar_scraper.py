@@ -29,7 +29,7 @@ class EdgarScraperTestCase(unittest.TestCase):
         company = EdgarScraper("Oracle Corp", "0001341439")
         result = company.get_filings_url(filing_type="10-K")
         expected = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001341439&type=10-K&dateb=&owner" \
-                   "=include&count=100"
+                   "=include&count=10"
         self.assertEqual(result, expected)
 
     def test_get_all_filings(self):
