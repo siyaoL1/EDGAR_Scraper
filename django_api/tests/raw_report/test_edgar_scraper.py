@@ -38,7 +38,7 @@ class EdgarScraperTestCase(unittest.TestCase):
         result = company.get_all_filings(filing_type="10-K")
 
         url = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001341439&type=10-K&dateb=&owner" \
-              "=include&count=100"
+              "=include&count=10"
         page = requests.get(url, timeout=10)
 
         while not page.ok:

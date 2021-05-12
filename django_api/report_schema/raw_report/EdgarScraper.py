@@ -108,7 +108,7 @@ class EdgarScraper:
             specified will return all documents.
             ownership: Defaults to include. Options are include, exclude, only.
             no_of_entries: Number of reports can be returned. Defaults to 10
-            and the maximum is 100 as well.
+            and the maximum is 100.
 
         Returns:
             Returns the HTML of the filing page. If the GET request to the
