@@ -3,19 +3,6 @@ import json
 import openpyxl as pyxl
 
 
-# def json_file_to_json_dict(json_file_path: str) -> dict:
-#     """
-#     Args:
-#         json_file_path: File path to the JSON file
-#
-#     Returns:
-#         Dictionary of dictionaries that represents the JSON.
-#     """
-#     with open(json_file_path, 'r') as json_file:
-#         return json.load(json_file)
-#
-
-
 def json_dict_to_dataframes_dict(json_dict: dict) -> dict:
     """
     Args:

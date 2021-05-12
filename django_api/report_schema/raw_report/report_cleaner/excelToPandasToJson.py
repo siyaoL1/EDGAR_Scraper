@@ -22,7 +22,7 @@ class ConvertCleanSave:
         self.pandas_dict = ten_k_workbook_to_dataframes_dict(
             self.cleaned_excel_report, self.notes)
 
-    def convert_to_json(self):
+    def convert_to_json(self) -> dict:
         """
         :return: calls the object_conversion utility to make a json for storing in the database
         """

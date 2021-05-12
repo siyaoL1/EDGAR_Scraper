@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.apps import AppConfig
 
 from rest_framework import viewsets, serializers, status
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -67,8 +68,7 @@ class RawReportViewSet(viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=False, url_path='get-raw-reports',
             url_name='get-raw-reports')
-    def get_raw_reports(self, request):
-        # Leave import in here. Otherwise, circular import error occurs.
+    def get_raw_reports(self, request: Request) -> Response:
         from report_schema.proxy import Proxy
         
         query_params_copy = request.query_params.copy()
