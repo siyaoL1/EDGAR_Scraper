@@ -316,7 +316,6 @@ def __row_selection(data: dict):
             Redirects to the generated_report page when the request to server is successful, otherwise renders
             report_generation.html with error message displayed.
         """
-    print(data)
     form_data = {}
     for sheet in data:
         str_rows = request.form.getlist(sheet)
