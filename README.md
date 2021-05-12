@@ -24,8 +24,6 @@ The following commands will create an index.html file in docs/build/html/index.h
 ```
 
 # Developer Documentation
-### Setting up the Docker Containers
-Patrick please put all the steps you'd take to set up the docker containers from scratch
 
 ### Accessing Cloud Instance
 * Download the scraper.pem security key
@@ -36,11 +34,54 @@ Patrick please put all the steps you'd take to set up the docker containers from
     ssh -i "scraper.pem" ec2-user@ec2-18-217-8-244.us-east-2.compute.amazonaws.com
     ```
 
+### Starting the Production Containers
+```bash
+docker-compose up --build -d
+```
+
+### Setup database
+```bash
+docker exec django-server python3 manage.py makemigrations
+docker exec django-server python3 manage.py migrate
+```
+
+### Setup superuser
+```bash
+docker exec -it django-server python3 manage.py createsuperuser
+```
+
 ### Running Tests
+
+#### Starting Test Containers
+```bash
+docker-compose -f testing-compose.yaml build --build-arg TESTING="True"
+docker-compose -f testing-compose.yaml up -d
+```
+
 #### Backend Tests
-Should be how to run the tests from a docker container
+```bash
+docker exec django-test-server python manage.py test
+```
+
+#### Backend Tests with coverage
+
+```bash
+docker exec django-test-server coverage run --omit venv/*,*/migrations*,*test* --source company_schema,report_schema manage.py test
+
+docker exec django-test-server coverage report
+```
+
 #### Frontend Tests
-Should be how to run the tests from a docker container
+```bash
+docker exec flask-test-server pytest flask_app/test_flask_app
+```
+
+#### Frontend Tests with coverage
+```bash
+docker exec flask-test-server coverage run --omit venv/*,*test* -m pytest flask_app/test_flask_app.py
+
+docker exec flask-test-server coverage report
+```
 
 ### System Architecture
 #### Flask Frontend Routes
@@ -107,7 +148,7 @@ describe what the various endpoints do
 
 ### Sprint 3
 - Brady Snelson - 15% - Refactored/transferred the functionality that existed within the report runner file (the core of report generation) into endpoints on the django backed. Rewrote tests for all of said functionality. Engineered a new solution to creating a report through a from instead of prompting for user input. Added an authentication endpoint to the user model.
+
 - Gilbert Garczynski - 15% - Added download report button for raw reports.  Added zoom link for the company and to login to your personal zoom.  Fixes to website tests and other design fixes to various other files.
 - Siyao Li - 15% - Created frontend report generation page with dynamic multiselect forms. Integreated frontend report generation page with Django server. Integrated login page with django authentication endpoint, and fixed bug on registration page. Added tests for the report generation. Worked on styling the frontend UI. 
-- Jason Hipkins - 15% - Fixed an issue with excel spreadsheets not saving correclty. Assisted in refactoring functionality of report runner and manually merging active report and object conversions to the backend. Added backend coding for converting reports from database json to downloadable excel files. Added more functionality to active_report.py by removing duplicated columns and information. 
-
+- Jason Hipkins - 15% - Fixed an issue with excel spreadsheets not saving correclty. Assisted in refactoring functionality of report runner and manually merging active report and object conversions to the backend. Added backend coding for converting reports from database json to downloadable excel files. Added more functionality to active_report.py by removing duplicated columns and information.
