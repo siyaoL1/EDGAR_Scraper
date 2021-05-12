@@ -20,3 +20,9 @@ RUN pip install --upgrade -r requirements.txt
 
 # Mounts the application code to the image
 COPY . /code/
+
+ARG TESTING
+
+RUN if [ "$TESTING" = "True" ]; \
+    then pip install -r testing-requirements.txt; \
+    fi
