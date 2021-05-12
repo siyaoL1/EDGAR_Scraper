@@ -18,3 +18,9 @@ COPY requirements.txt /code/
 RUN pip install --upgrade -r requirements.txt
 
 COPY . /code/
+
+ARG TESTING
+
+RUN if [ "$TESTING" = "True" ]; \
+    then pip install -r testing-requirements.txt; \
+    fi

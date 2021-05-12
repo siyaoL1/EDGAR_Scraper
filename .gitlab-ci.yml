@@ -50,7 +50,7 @@ test-django-backend:
 flake8:
   stage: Static Analysis
   script:
-    - flake8 --ignore=W293,W391 --exclude 'venv/*' --max-line-length=120 .
+    - flake8 --ignore=W293,W391,F401,F541,E261,E501,E302,E128,E121,E127,E291,W292,W291 --exclude=venv/* --max-line-length=120 .
   retry:
     max: 2
     when:
