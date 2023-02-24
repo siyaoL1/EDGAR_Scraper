@@ -125,32 +125,3 @@ Note:  Timeout errors will be the result of network and internet speeds dropping
 #### Django API Endpoints
 describe what the various endpoints do
 
-# Contributions
-### Sprint 1
-- Brady Snelson - 15% - Added authentication to generated-reports endpoint. Updated GET/POST/PUT routes to only allow requests from the owner of each report. Created EC2 cloud instance and set up dockerized django container to run on it.
-- Jason Hipkins - 15% - Worked on filtering and cleaning excel raw reports. worked on merging reports together, lot of research on accounting methods and line item names.
-- Preston Thomson - 15% - Set up the CI-CD pipeline for automatic building, testing, linting, and code coverage checks.
-- Josh Helperin - 15% - Fixed and tested querant, created proxy functions and tested proxy.
-- Gilbert Garczynski - 15% - made code to download reports from the webscraper.  Implemented a database storage (dict and lists) for the webscraper.  Made methods in company.py to search the database for URL's.   Tests for each.
-- Siyao Li - 15% - Worked on analyzing the pyedgar library, and contributed to adding features and testing the Edgar_Lite library, which retrieves the url for a company’s 10-K/10-Q excel reports with the company’s name and CIK number.
-- Patrick Donnelly - 15% - Created a class query which handles taking user input and returns an ActiveReport. Implemented QueryEngine to handle Query creation based on user input. Added functionality in our data API to handle taking requests from users and send to proxy which sends it to QueryEngine. Updated report_runner to take user input and make calls to our data api for creating new report and getting raw reports. Created tests for report_runner. Updated docker files and docker-compose file.
-
-
-
-### Sprint 2
-- Brady Snelson - 15% -  Added authentication to generated-reports endpoint. Updated GET/POST/PUT routes to only allow requests from the owner of each report. Created EC2 cloud instance and set up dockerized django container to run on it.
-- Jason Hipkins - 15% - got generated report working and saving locally, fixed bugs in josh's code, merged and fixed bugs, got filtering working and merging reports fully functional, almost did code coverage for all of report_runner but it works on console.
-- Preston Thomson - 15% - 
-- Joshua Helperin - 15% - Integrated report_runner.py and EdgarScraper.py into django_api direcotry, enabled saving raw reports to database and local user directory after pulling from edgar.sec.gov, debugged models.py, EdgarScraper.py, utils.py, and report_runner.py, changed and fixed implementation of active_reports.py and report_runner.py, made tests for utils.py and report_runner.py.
-- Gilbert Garczynski - 15% - Created frontend server for the User Interface.  Implemented login, registration, logout, and viewing of reports along with HTML for each.
-- Siyao Li - 15% - Worked on designing frontend UI pages and navigation. Wrote tests for frontend flask app.py. Implemented the feature of storing user's login state. Formatted the README.md file.
-- Patrick Donnelly - 15% - Reviewed/approved merge requests. Improved CI/CD pipeline build times by using caching. Updated CI/CD to get all of the tests and coverage. Created Sphinx documentation. Created Dockerfiles for flask_ui and added a service to the docker-compose file. Also created a dockerfile for the report_runner.py so the can be ran from any os. Coded the proxy and helped debug errors.
-
-### Sprint 3
-- Brady Snelson - 15% - Refactored/transferred the functionality that existed within the report runner file (the core of report generation) into endpoints on the django backed. Rewrote tests for all of said functionality. Engineered a new solution to creating a report through a from instead of prompting for user input. Added an authentication endpoint to the user model.
-- Gilbert Garczynski - 15% - Added download report button for raw reports.  Added zoom link for the company and to login to your personal zoom.  Fixes to website tests and other design fixes to various other files.
-- Siyao Li - 15% - Created frontend report generation page with dynamic multiselect forms. Integreated frontend report generation page with Django server. Integrated login page with django authentication endpoint, and fixed bug on registration page. Added tests for the report generation. Worked on styling the frontend UI. 
-- Jason Hipkins - 15% - Fixed an issue with excel spreadsheets not saving correclty. Assisted in refactoring functionality of report runner and manually merging active report and object conversions to the backend. Added backend coding for converting reports from database json to downloadable excel files. Added more functionality to active_report.py by removing duplicated columns and information. 
-- Patrick Donnelly - 15% - Created endpoints in the frontend flask app and backend django api to handle report analysis. Made improvements to docker setup and created a docker compose file specifically for testing. Added validation methods for analysis endpoints and helper methods for running the analysis. Added tests for frontend and backend endpoints and analysis helper methods.
-- Preston Thomson - 15% - Cleaned up CI-CD pipeline and wrote documentation for it.  Spent an unfortunately long amount of time trying to get docker commands to work in the pipeline for easy deployment into AWS.  Was forced to abondon this effort in favor of making sure all tests were passing and leaving AWS deployment to a manual task.  Worked with other group members to make sure all tests were passing in the pipeline before final submission.  
-   
